@@ -1,0 +1,22 @@
+# Ignore Visual Studio and build files
+.vs/
+*.vsidx
+*.suo
+*.user
+*.cache
+*.db
+
+# Ignore compiled files
+bin/
+obj/
+
+# Ignore user-specific settings
+*.user
+*.sln.docstates
+
+# Ignore dependency packages
+packages/
+node_modules/
+
+# Ignore environment files (if using .env)
+.env
