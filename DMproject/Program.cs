@@ -14,7 +14,24 @@ namespace DMproject
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DataBaseDev"));
             });
-            builder.Services.AddControllers();
+
+			//Dependency injection 
+			builder.Services.AddScoped<ICampaignRepository, CampaignRepository>();
+			builder.Services.AddScoped<ICampaignService, CampaignService>();
+
+			//CORS policy
+			builder.Services.AddCors(options =>
+			{
+				options.AddPolicy("AllowAll",
+					policy =>
+					{
+						policy.AllowAnyOrigin()
+							   .AllowAnyMethod()
+							   .AllowAnyHeader();
+					});
+			});
+
+			builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -32,8 +49,9 @@ namespace DMproject
 
             app.UseAuthorization();
 
+			app.UseCors("AllowAll");  // Enable CORS middleware
 
-            app.MapControllers();
+			app.MapControllers();
 
             app.Run();
         }
